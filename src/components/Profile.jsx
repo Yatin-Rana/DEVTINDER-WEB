@@ -1,9 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
     const user = useSelector((store) => store.user);
-
+    const navigate = useNavigate();
     if (!user) {
         return (
             <div className="flex justify-center items-center h-screen bg-gray-900 text-white">
@@ -44,7 +45,7 @@ const Profile = () => {
                 <p className="text-gray-400 text-sm text-center mt-2">"{user.about}"</p>
 
                 {/* Edit Profile Button */}
-                <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                <button onClick={() => navigate('/edit-profile')} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                     Edit Profile
                 </button>
             </div>

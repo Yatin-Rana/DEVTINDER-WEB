@@ -12,6 +12,7 @@ const NavBar = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+
   const handleLogout = async () => {
     try {
       const response = await axios.post('http://localhost:7777/logout', {}, { withCredentials: true })
@@ -26,7 +27,7 @@ const NavBar = () => {
   return (
     <div className="navbar bg-base-200">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">🧑🏻‍💻DevTinder</a>
+       {user ? <Link to={'/feed'} className="btn btn-ghost text-xl" >🧑🏻‍💻DevTinder</Link> :<Link  className="btn btn-ghost text-xl" >🧑🏻‍💻DevTinder</Link> } 
       </div>
       {user && (<>
         <div className="flex-none gap-2 flex ">
