@@ -13,7 +13,7 @@ const Profile = () => {
     const location = useLocation();
 
     useEffect(() => {
-        const fetchProfile = async () => {
+        const fetchProfile = async () => { 
             try {
                 const res = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
                 setProfile(res.data);
