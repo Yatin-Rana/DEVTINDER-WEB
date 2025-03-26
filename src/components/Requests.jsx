@@ -2,13 +2,14 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BASE_URL } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { addRequests } from '../utils/requestSlice';
+import { addRequests, removeRequest } from '../utils/requestSlice';
 
 const Requests = () => {
     const dispatch = useDispatch();
     const requests = useSelector((store) => store.request);
     const [showToast, setShowToast] = useState(false)
     const [buttonStatus, setButtonStatus] = useState("");
+    const [showButtons, setShowButtons] = useState(true)
     const fetchPendingRequests = async () => {
         try {
             const res = await axios.get(BASE_URL + '/user/requests/received', {
@@ -26,11 +27,14 @@ const Requests = () => {
             const res = await axios.post(BASE_URL + `/request/review/${status}/${requestId}`, {}, {
                 withCredentials: true
             })
+            setShowButtons(false)
             setShowToast(true)
             setTimeout(() => {
                 setShowToast(false)
             }, 3000);
-            console.log(res.data);
+
+            dispatch(removeRequest(requestId))
+            // console.log(res.data);
         } catch (err) {
             console.error(err.message)
         }
@@ -63,18 +67,22 @@ const Requests = () => {
                                 <p className="text-gray-400">{request.fromUserId.age}, {request.fromUserId.gender}</p>
                                 <p className="text-gray-300 italic">{request.fromUserId.about}</p>
                             </div>
-                            <div className='flex gap-x-8 mx-12 '>
-                                <button className="btn btn-outline" onClick={() => {
-                                    handleRequest("rejected", request._id)
-                                    setButtonStatus("rejected")
-                                }} >Reject</button>
+                            {showButtons && (
+                                <div className='flex gap-x-8 mx-12 '>
+                                    <button className="btn btn-outline" onClick={() => {
+                                        handleRequest("rejected", request._id)
+                                        setButtonStatus("rejected")
+                                    }} >Reject</button>
 
-                                <button onClick={() => {
-                                    handleRequest("accepted", request._id)
-                                    setButtonStatus("accepted")
-                                }} className="btn btn-outline btn-secondary">Accept</button>
+                                    <button onClick={() => {
+                                        handleRequest("accepted", request._id)
+                                        setButtonStatus("accepted")
+                                    }} className="btn btn-outline btn-secondary">Accept</button>
 
-                            </div>
+                                </div>)
+
+                            }
+
                         </div>
                     ))}
                     {
