@@ -1,18 +1,24 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BASE_URL } from '../utils/constants';
+import { useDispatch } from 'react-redux';
+import { removeUserFromFeed } from '../utils/feedSlice';
 
 const UserCard = ({ user }) => {
-
+    const dispatch = useDispatch()
     const handleRequest = async (status, toUserId) => {
         try {
             const res = await axios.post(BASE_URL + `/request/send/${status}/${toUserId}`, {}, { withCredentials: true })
-            console.log(res.data)
+            // console.log(res.data)
+            console.log(toUserId)
+            dispatch(removeUserFromFeed(toUserId));
         }
         catch (err) {
             console.error(err.message);
         }
     }
+
+
 
     return (
         <div className="h-screen flex items-center justify-center ">

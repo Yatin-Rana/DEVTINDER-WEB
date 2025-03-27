@@ -4,35 +4,34 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFeed } from '../utils/feedSlice'
 import UserCard from './UserCard'
+
 const Feed = () => {
   const feed = useSelector((store) => store.feed)
   const dispatch = useDispatch()
 
   const getFeed = async () => {
-    // console.log(feed);
-    if (feed && Object.keys(feed).length > 0) return;
+    if (feed && feed.length > 0) return;
     try {
       const res = await axios.get(BASE_URL + '/feed', { withCredentials: true })
-      dispatch(addFeed(res.data))
-      console.log(res.data)
-
+      console.log("API Response:", res.data) // 🛠 Debugging step
+      dispatch(addFeed(res.data))  
     } catch (err) {
-      console.error(err)
+      console.error("Error fetching feed:", err);
     }
-
   }
 
   useEffect(() => {
     getFeed();
-    console.log("getfeed called")
   }, [])
-  return feed && (<>
+
+  useEffect(() => {
+    console.log("Updated Feed:", feed) // Log Redux state to see changes
+  }, [feed])
+
+  return (
     <div>
-      <UserCard user={feed.data[0]} />
+      {feed.length > 0 ? feed.map((user) => <UserCard key={user._id} user={user} />) : <p>Loading...</p>}
     </div>
-
-
-  </>
   )
 }
 
