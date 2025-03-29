@@ -22,7 +22,7 @@ const UserCard = ({ user }) => {
 
     return (
         <div className="h-screen flex items-center justify-center ">
-            <div className="bg-[#1e1e1e] shadow-lg rounded-xl w-96 overflow-hidden border border-gray-700 transition duration-300 hover:scale-105 hover:shadow-blue-500/20" key={user._id}>
+            <div className=" shadow-lg rounded-xl w-96 overflow-hidden border border-gray-700 transition duration-300 hover:scale-105 hover:shadow-blue-500/20" key={user._id}>
                 <figure className="relative">
                     <img
                         className="w-full h-48 object-cover rounded-t-xl"

@@ -37,7 +37,7 @@ const Login = () => {
             dispatch(addUser(response.data))
             if (formStatus == "login") {
                 navigate('/feed');
-            }
+            }else
             navigate('/profile')
 
             setEmailId('');
@@ -50,7 +50,7 @@ const Login = () => {
 
     return (
         <div>
-            <section className="bg-gray-50 dark:bg-gray-900">
+            <section className="">
                 <div className="flex flex-col items-center justify-center px-6 py-6 mx-auto md:h-screen lg:py-0">
                     <div className='sm:h-[100vh] justify-start mt-12 md:h-screen w-full flex flex-col items-center md:mt-16'>
                         <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
